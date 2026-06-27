@@ -165,18 +165,22 @@ function tuic-v5() {
     sed -i "s/PASSWORD/$password/g" /usr/local/etc/sing-box/$conf_name.json
     sed -i "s/UUID/$uuid/g" /usr/local/etc/sing-box/$conf_name.json
 
+    server_link="tuic://$uuid:$password@$server_ip:10006?congestion_control=bbr&udp_relay_mode=quic&alpn=h3&allow_insecure=1#tuic"
+
     check_config_validate $conf_name
     restart
+
+    gen_url_qr $server_link
 }
 
 function menu() {
     while true; do
         echo -e ""
-        echo -e "-----------------Sing-Box-tuic-----------------"
+        echo -e "-----------------Sing-Box-tuic-v5-----------------"
         echo -e ""
         echo -e " ${GREEN}1.${PLAIN} 安装 Sing-Box"
         echo -e " ${GREEN}2.${PLAIN} 卸载 Sing-Box"
-        echo -e " ${GREEN}3.${PLAIN} 配置 tuic"
+        echo -e " ${GREEN}3.${PLAIN} 配置 tuic-v5"
         echo -e " ${GREEN}4.${PLAIN} 查看配置"
         echo -e " ${GREEN}5.${PLAIN} 重启 Sing-Box"
         echo -e " ${GREEN}0.${PLAIN} 退出脚本"
@@ -185,7 +189,7 @@ function menu() {
         case $menuInput in
         1) install_sing_box ;;
         2) uninstall_sing_box ;;
-        3) tuic ;;
+        3) tuic-v5 ;;
         4) view_tuic_config ;;
         5) restart_sing_box ;;
         99) test ;;
