@@ -70,6 +70,7 @@ function uninstall_sing_box() {
     rm /usr/bin/sing-box
     rm /etc/systemd/system/sing-box.service
     rm -rf /usr/local/etc/sing-box
+    echo -e "卸载完成"
 }
 
 function restart_sing_box {
