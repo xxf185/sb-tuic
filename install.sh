@@ -166,8 +166,6 @@ function tuic-v5() {
     sed -i "s/PASSWORD/$password/g" /usr/local/etc/sing-box/$conf_name.json
     sed -i "s/UUID/$uuid/g" /usr/local/etc/sing-box/$conf_name.json
 
-    cat /usr/local/etc/sing-box/$conf_name.json
-
     server_link="tuic://$uuid:$password@$server_ip:10006?congestion_control=bbr&udp_relay_mode=quic&alpn=h3&allow_insecure=1#tuic"
 
     check_config_validate $conf_name
