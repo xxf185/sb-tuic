@@ -16,8 +16,8 @@
                 "alpn": [
                     "h3"
                 ],
-                "certificate_path": "/etc/hysteria/cert.pem",
-                "key_path": "/etc/hysteria/private.key"
+                "certificate_path": "/etc/sb_ssl/cert.pem",
+                "key_path": "/etc/sb_ssl/private.key"
             }
         }
     ],
