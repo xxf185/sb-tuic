@@ -18,16 +18,6 @@ yellow() {
     echo -e "\033[33m\033[01m$*\033[0m"
 }
 
-function init_vps() {
-    red 使用root用户执行
-
-    apt update
-    apt install -yqq qrencode net-tools
-
-
-    mkdir -p /etc/sb_ssl && openssl ecparam -genkey -name prime256v1 -out /etc/sb_ssl/private.key && openssl req -new -x509 -days 3650 -key /etc/sb_ssl/private.key -out /etc/sb_ssl/cert.pem -subj "/CN=bing.com"
-}
-
 function common_command() {
     server_ip=$(curl -s https://ipinfo.io/ip)
     cloud=$(curl -s ipinfo.io/$server_ip/org|awk '{print $2}')
@@ -179,57 +169,25 @@ function tuic-v5() {
     restart
 }
 
-function anytls() {
-
-    conf_name="anytls"
-
-    common_command
-    
-    check_config_exit $conf_name
-
-    wget -O /usr/local/etc/sing-box/$conf_name.json https://raw.githubusercontent.com/clhlc/ProxyConfig/main/Sing-Box/Anytls/config.json
-
-    sed -i "s/PASSWORD/$password/g; s/SERVER_NAME/gateway\.icloud\.com/g; s/SERVER/gateway\.icloud\.com/g; s/PRIVATE_KEY/$private_key/g; s/SHORT_ID/$short_id/g" /usr/local/etc/sing-box/$conf_name.json
-
-    check_config_validate $conf_name
-
-    restart
-}
-
 function menu() {
     while true; do
-        echo -e "#############################################################"
-        echo -e "#               ${RED}Sing-Box 一键安装脚本${PLAIN}                       #"
-        echo -e "# ${GREEN}作者${PLAIN}: clhlc                                               #"
-        echo -e "# ${GREEN}GitHub 项目${PLAIN}: https://github.com/clhlc/ProxyConfig         #"
-        echo "#############################################################"
-        echo ""
-        echo -e " ${GREEN}0.${PLAIN} 初始化 VPS"
+        echo -e ""
+        echo -e "-----------------Sing-Box-tuic-----------------"
+        echo -e ""
         echo -e " ${GREEN}1.${PLAIN} 安装 Sing-Box"
         echo -e " ${GREEN}2.${PLAIN} 卸载 Sing-Box"
-        echo -e " ${GREEN}3.${PLAIN} 重启 Sing-Box"
-        echo -e " ${GREEN}4.${PLAIN} 查看 Sing-Box 日志"
-        echo -e " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        echo -e " ${GREEN}11.${PLAIN} 配置 Hysteria2${RED}(推荐)"
-        echo -e " ${GREEN}12.${PLAIN} 配置 Vless+XTLS+uTLS+Reality${RED}(推荐)"
-        echo -e " ${GREEN}13.${PLAIN} 配置 SS+ShadowTLS"
-        echo -e " ${GREEN}14.${PLAIN} 配置 Tuic V5"
-        echo -e " ${GREEN}15.${PLAIN} 配置 Anytls+Reality"
-        echo -e " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        echo -e " ${GREEN}10.${PLAIN} 退出脚本"
-        echo ""
+        echo -e " ${GREEN}3.${PLAIN} 配置 tuic"
+        echo -e " ${GREEN}4.${PLAIN} 查看配置"
+        echo -e " ${GREEN}5.${PLAIN} 重启 Sing-Box"
+        echo -e " ${GREEN}0.${PLAIN} 退出脚本"
+        echo -e ""
         read -rp "请输入选项: " menuInput
         case $menuInput in
-        0) init_vps ;;
         1) install_sing_box ;;
         2) uninstall_sing_box ;;
-        3) restart_sing_box ;;
-        4) view_sing_box_log ;;
-        11) hy2 ;;
-        12) vless_reality ;;
-        13) shadowtls ;;
-        14) tuic-v5 ;;
-        15) anytls ;;
+        3) tuic ;;
+        4) view_tuic_config ;;
+        5) restart_sing_box ;;
         99) test ;;
         *) exit 0 ;;
         esac
