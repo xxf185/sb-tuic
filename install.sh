@@ -175,6 +175,11 @@ function tuic-v5() {
     gen_url_qr $server_link
 }
 
+
+function view_tuic-v5_config() {
+    gen_url_qr $server_link 
+}
+
 function menu() {
     while true; do
         echo -e ""
