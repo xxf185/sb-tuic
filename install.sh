@@ -192,7 +192,7 @@ function menu() {
         1) install_sing_box ;;
         2) uninstall_sing_box ;;
         3) tuic-v5 ;;
-        4) view_tuic_config ;;
+        4) view_tuic-v5_config ;;
         5) restart_sing_box ;;
         99) test ;;
         *) exit 0 ;;
